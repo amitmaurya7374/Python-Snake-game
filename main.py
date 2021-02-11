@@ -30,7 +30,7 @@ screen.onkey(key="Right", fun=snake.move_right)
 is_game_is_on = True
 while is_game_is_on:
     screen.update()  # update a screen to show a snake moving
-    time.sleep(0.3)
+    time.sleep(0.2)
     snake.move()
     #     Detect a collosion of snake with food .we use distance method for this
     if snake.head.distance(food) < 15:
@@ -42,10 +42,8 @@ while is_game_is_on:
         is_game_is_on = False
         scoreborad.game_over()
     #     Detect snake head collison
-    for segment in snake.segment:
-        if segment == snake.head:
-            pass
-        elif snake.head.distance(segment) < 10:
+    for segment in snake.segment[1:]:
+        if snake.head.distance(segment) < 10:
             is_game_is_on = False
             scoreborad.game_over()
 screen.exitonclick()
