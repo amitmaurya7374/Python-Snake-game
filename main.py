@@ -7,6 +7,7 @@ will update our screen using a update mehtod """
 from turtle import Screen
 from snake import Snake
 from food import Food
+from scoreboard import ScoreBoard
 
 # created an object
 screen = Screen()
@@ -20,6 +21,7 @@ screen.listen()  # listen for keybordstokes
 
 snake = Snake()  # created an snake object
 food = Food()  # created a food class object
+scoreborad = ScoreBoard()
 
 screen.onkey(key="Up", fun=snake.move_up)
 screen.onkey(key="Down", fun=snake.move_down)
@@ -30,7 +32,20 @@ while is_game_is_on:
     screen.update()  # update a screen to show a snake moving
     time.sleep(0.3)
     snake.move()
-#     Detect a collosion of snake with food .we use distance method for this
+    #     Detect a collosion of snake with food .we use distance method for this
     if snake.head.distance(food) < 15:
         food.food_new_location()
+        snake.extend()
+        scoreborad.increment_score()
+    # Detect a collosion if snake with wall.
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        is_game_is_on = False
+        scoreborad.game_over()
+    #     Detect snake head collison
+    for segment in snake.segment:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            is_game_is_on = False
+            scoreborad.game_over()
 screen.exitonclick()

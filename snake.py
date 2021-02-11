@@ -15,6 +15,7 @@ class Snake:
 
     def __init__(self):
         # self.turtle = Turtle(shape="square")
+
         self.segment = []  # as soon as we create an object this code will always run
         self.create_snack()  # this method call immediately whenever we create an object from this class
         self.head = self.segment[0]
@@ -22,11 +23,19 @@ class Snake:
     def create_snack(self):
         """This function will create a initial snake at 0,0 position"""
         for position in STARTING_POSITION_OF_TURTLE:
-            turtle = Turtle(shape="square")
-            turtle.color("white")
-            turtle.penup()
-            turtle.goto(position)
-            self.segment.append(turtle)
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        """This will add a segment to a  snake"""
+        turtle = Turtle(shape="square")
+        turtle.color("white")
+        turtle.penup()
+        turtle.goto(position)
+        self.segment.append(turtle)
+
+    def extend(self):
+        """This function extend a snake lenght when a snake eats a food"""
+        self.add_segment(self.segment[-1].position())
 
     def move(self):
         """This function help snake to move """
